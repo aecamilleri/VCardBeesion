@@ -1,0 +1,61 @@
+body {
+    background-color: #f7f7f7;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    max-width: 600px;
+}
+
+#qr-container canvas {
+    width: 100%;
+    height: auto;
+}
+
+h2 {
+    font-weight: 600;
+    color: #333; /* Mejora la legibilidad */
+}
+
+.list-group-item {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Barra de navegación superior */
+.navbar {
+    margin-bottom: 0;
+    height: 75px;
+    background-color: #ffffff; /* Fondo más limpio para la parte superior */
+    border-bottom: 2px solid #ddd; /* Separador sutil */
+}
+.nav-link {
+    color: #ffffff;
+}
+
+.navbar>.container {
+    justify-content: center;
+}
+
+.navbar-nav .nav-item .nav-link {
+    font-weight: 600;
+    color: #007bff; /* Color más claro para los enlaces */
+    font-size: 1rem; /* Aumenta la legibilidad */
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Menú inferior */
+.navbar.fixed-bottom {
+    padding: 0;
+    border-top: 1px solid #ddd; /* Separador sutil en el menú infer*/
+}
+
+/* Aumentar el tamaño de los íconos */
+.bi::before {
+    font-size: 1.5rem; /* Tamaño de los íconos */
+}
