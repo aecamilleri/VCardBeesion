@@ -3,128 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Nativa - Navegación</title>
-    <!-- Agregar Bootstrap para el diseño -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Estilos básicos */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-        }
-        .container {
-            margin-top: 20px;
-        }
-    </style>
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-
-    <div class="container" id="content">
-        <!-- El contenido de las pantallas se cargará aquí dinámicamente -->
-    </div>
-
-    <!-- Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">App Nativa</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="navigateTo('dashboard')">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="navigateTo('generateQR')">Nuevo QR</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="navigateTo('myQRs')">Mis QRs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="navigateTo('user-data')">Datos de Usuario</a>
-                </li>
-            </ul>
+    <!-- Logo en la parte superior -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="assets/img/logo.jpg" alt="Logo" width="48" height="48" class="d-inline-block align-top">
+            </a>
         </div>
     </nav>
 
-    <!-- Scripts -->
-    <script>
-        // Contenido de cada "pantalla"
-        const screens = {
-            login: `<h2>Login</h2><p>Formulario de login aquí...</p>`,
-            dashboard: `
-                <h2>Dashboard</h2>
-                <p>Bienvenido al Dashboard</p>
-                <div>
-                    <p><strong>Nombre:</strong> Juan Pérez</p>
-                    <p><strong>Email:</strong> juan@example.com</p>
-                    <p><strong>Cargo:</strong> Gerente</p>
-                    <p><strong>Empresa:</strong> Ejemplo S.A.</p>
+    <!-- Contenido principal del login centrado -->
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+        <div class="text-center">
+            <h2>Iniciar Sesión</h2>
+            <form id="login-form" class="mt-4">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" id="email" class="form-control" required>
                 </div>
-            `,
-            generateQR: `
-                <h2>Generar QR</h2>
-                <form>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Ingresa tu email">
-                    </div>
-                    <button type="button" class="btn btn-primary" onclick="generateQR()">Generar QR</button>
-                </form>
-            `,
-            myQRs: `
-                <h2>Mis QRs</h2>
-                <p>Aquí se mostrarán los QRs generados.</p>
-            `,
-            userData: `
-                <h2>Datos de Usuario</h2>
-                <p>Nombre: Juan Pérez</p>
-                <p>Email: juan@example.com</p>
-                <p>Cargo: Gerente</p>
-                <p>Empresa: Ejemplo S.A.</p>
-            `,
-        };
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" id="remember" class="form-check-input">
+                    <label for="remember" class="form-check-label">Recordar sesión</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
 
-        // Función para cambiar de vista
-        function navigateTo(screen) {
-            document.getElementById('content').innerHTML = screens[screen];
-            history.pushState({ screen: screen }, "", screen + ".html");
-        }
+    <script>
+        // Función para manejar el login
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-        // Configurar las rutas iniciales
-        document.addEventListener('DOMContentLoaded', function() {
-            const path = window.location.pathname.split("/").pop().replace(".html", "");
-            if (screens[path]) {
-                document.getElementById('content').innerHTML = screens[path];
-            } else {
-                navigateTo('login'); // Si no hay ruta, ir a la página de login
-            }
-        });
+    // Obtener datos del formulario
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember').checked;
 
-        // Escuchar cambios en la URL (cuando el usuario usa los botones atrás/adelante)
-        window.addEventListener('popstate', function(event) {
-            const screen = event.state?.screen || 'login';
-            navigateTo(screen);
-        });
+    // Guardar en localStorage si "Recordar sesión" está activado
+    if (remember) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+    }
 
-        // Función para generar el QR (solo ejemplo, no funcional por ahora)
-        function generateQR() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            if (name && email) {
-                alert('QR generado con éxito');
-                navigateTo('myQRs'); // Ir a la pantalla de Mis QRs
-            } else {
-                alert('Por favor ingresa todos los datos');
-            }
-        }
+    // Redirigir al dashboard
+    window.location.href = 'dashboard.html';
+});
     </script>
-
-    <!-- Agregar Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
