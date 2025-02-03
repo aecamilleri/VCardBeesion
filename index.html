@@ -18,47 +18,107 @@
         </div>
     </nav>
 
-    <!-- Contenido principal del login centrado -->
+    <!-- Contenido principal centrado -->
     <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 80vh;">
         <div class="text-center">
-            <h2>Iniciar Sesión</h2>
-            <form id="login-form" class="mt-4">
-                <div class="mb-3">
-                    <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" id="email" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" id="password" class="form-control" required>
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" id="remember" class="form-check-input">
-                    <label for="remember" class="form-check-label">Recordar sesión</label>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
-            </form>
+            <!-- Login Form -->
+            <div id="login-div">
+                <h2>Iniciar Sesión</h2>
+                <form id="login-form" class="mt-4">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" id="password" class="form-control" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" id="remember" class="form-check-input">
+                        <label for="remember" class="form-check-label">Recordar sesión</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+                </form>
+                <p class="mt-3">¿No tienes cuenta? <a href="javascript:void(0);" id="show-signup">Regístrate aquí</a></p>
+            </div>
+
+            <!-- SignUp Form -->
+            <div id="signup-div" style="display: none;">
+                <h2>Regístrate</h2>
+                <form id="signup-form" class="mt-4">
+                    <div class="mb-3">
+                        <label for="signup-email" class="form-label">Correo Electrónico</label>
+                        <input type="email" id="signup-email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signup-password" class="form-label">Contraseña</label>
+                        <input type="password" id="signup-password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm-password" class="form-label">Confirmar Contraseña</label>
+                        <input type="password" id="confirm-password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                </form>
+                <p class="mt-3">¿Ya tienes cuenta? <a href="javascript:void(0);" id="show-login">Inicia sesión aquí</a></p>
+            </div>
         </div>
     </div>
 
     <script>
         // Función para manejar el login
-document.getElementById('login-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    // Obtener datos del formulario
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const remember = document.getElementById('remember').checked;
+            // Obtener datos del formulario
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
 
-    // Guardar en localStorage si "Recordar sesión" está activado
-    if (remember) {
-        localStorage.setItem('email', email);
-        localStorage.setItem('password', password);
-    }
+            // Guardar en localStorage si "Recordar sesión" está activado
+            if (remember) {
+                localStorage.setItem('email', email);
+                localStorage.setItem('password', password);
+            }
 
-    // Redirigir al dashboard
-    window.location.href = 'dashboard.html';
-});
+            // Redirigir al dashboard
+            window.location.href = 'dashboard.html';
+        });
+
+        // Mostrar la sección de Signup
+        document.getElementById('show-signup').addEventListener('click', function() {
+            document.getElementById('login-div').style.display = 'none';
+            document.getElementById('signup-div').style.display = 'block';
+        });
+
+        // Mostrar la sección de Login
+        document.getElementById('show-login').addEventListener('click', function() {
+            document.getElementById('signup-div').style.display = 'none';
+            document.getElementById('login-div').style.display = 'block';
+        });
+
+        // Función para manejar el signup
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtener datos del formulario de registro
+            const signupEmail = document.getElementById('signup-email').value;
+            const signupPassword = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Verificar si las contraseñas coinciden
+            if (signupPassword !== confirmPassword) {
+                alert('Las contraseñas no coinciden.');
+                return;
+            }
+
+            // Guardar en localStorage los datos de usuario
+            localStorage.setItem('email', signupEmail);
+            localStorage.setItem('password', signupPassword);
+
+            // Redirigir al dashboard
+            window.location.href = 'dashboard.html';
+        });
     </script>
 </body>
 </html>
