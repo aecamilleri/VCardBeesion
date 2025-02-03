@@ -18,10 +18,11 @@
         </div>
     </nav>
 
-    <!-- Contenido principal centrado -->
+    <!-- Contenido principal -->
     <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 80vh;">
         <div class="text-center">
-            <!-- Login Form -->
+
+            <!-- Div de Login -->
             <div id="login-div">
                 <h2>Iniciar Sesión</h2>
                 <form id="login-form" class="mt-4">
@@ -39,13 +40,25 @@
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
                 </form>
-                <p class="mt-3">¿No tienes cuenta? <a href="javascript:void(0);" id="show-signup">Regístrate aquí</a></p>
+                <p class="mt-3">¿No tienes cuenta? <a href="#" id="show-signup">Regístrate aquí</a></p>
             </div>
 
-            <!-- SignUp Form -->
-            <div id="signup-div" style="display: none;">
+            <!-- Div de Signup -->
+            <div id="signup-div" style="display:none;">
                 <h2>Regístrate</h2>
                 <form id="signup-form" class="mt-4">
+                    <div class="mb-3">
+                        <label for="signup-name" class="form-label">Nombre Completo</label>
+                        <input type="text" id="signup-name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signup-phone" class="form-label">Teléfono</label>
+                        <input type="tel" id="signup-phone" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signup-company" class="form-label">Empresa</label>
+                        <input type="text" id="signup-company" class="form-control" required>
+                    </div>
                     <div class="mb-3">
                         <label for="signup-email" class="form-label">Correo Electrónico</label>
                         <input type="email" id="signup-email" class="form-control" required>
@@ -60,8 +73,9 @@
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Registrarse</button>
                 </form>
-                <p class="mt-3">¿Ya tienes cuenta? <a href="javascript:void(0);" id="show-login">Inicia sesión aquí</a></p>
+                <p class="mt-3">¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión aquí</a></p>
             </div>
+
         </div>
     </div>
 
@@ -102,6 +116,9 @@
             event.preventDefault();
 
             // Obtener datos del formulario de registro
+            const name = document.getElementById('signup-name').value;
+            const phone = document.getElementById('signup-phone').value;
+            const company = document.getElementById('signup-company').value;
             const signupEmail = document.getElementById('signup-email').value;
             const signupPassword = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
@@ -112,9 +129,17 @@
                 return;
             }
 
-            // Guardar en localStorage los datos de usuario
-            localStorage.setItem('email', signupEmail);
-            localStorage.setItem('password', signupPassword);
+            // Crear un objeto userData con los datos del usuario
+            const userData = {
+                name: name,
+                phone: phone,
+                company: company,
+                email: signupEmail,
+                password: signupPassword
+            };
+
+            // Guardar los datos del usuario en el localStorage
+            localStorage.setItem('userData', JSON.stringify(userData));
 
             // Redirigir al dashboard
             window.location.href = 'dashboard.html';
