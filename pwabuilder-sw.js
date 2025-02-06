@@ -14,8 +14,7 @@ self.addEventListener("install", (event) => {
         "/index.html",
         "/styles.css",  // Agrega tus archivos CSS y JS reales
         "/app.js",
-        "/icons/icon-192x192.png",
-        "/icons/icon-512x512.png"
+        "/assets/img/logo.jpg.png"
       ]);
     })
   );
