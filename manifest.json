@@ -10,12 +10,12 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://aecamilleri.github.io/assets/img/logo.jpg",
+      "src": "https://raw.githubusercontent.com/aecamilleri/VCardBeesion/refs/heads/main/assets/img/logo.jpg",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://aecamilleri.github.io/assets/img/logo.jpg",
+      "src": "https://raw.githubusercontent.com/aecamilleri/VCardBeesion/refs/heads/main/assets/img/logo.jpg",
       "sizes": "512x512",
       "type": "image/png"
     }
