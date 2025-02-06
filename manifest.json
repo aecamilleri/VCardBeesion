@@ -1,7 +1,26 @@
 {
   "name": "Beesion VCard Generator",
+  "short_name": "BeeCard",
+  "description": "This mobile-first application allows users to generate, store, and manage personalized QR codes quickly and easily.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#000000",
-  "short_name": "BeeCard",
-  "description": "📝 Description:\nThis mobile-first application allows users to generate, store, and manage personalized QR codes quickly and easily. With an intuitive and streamlined interface designed exclusively for mobile devices, users can create QR codes with their contact information and share them effortlessly—without needing to download additional files.\n\n✨ Key Features:\n✅ Instant QR Generation: Create QR codes with your contact details in seconds.\n✅ Secure Storage: Save and access all your QR codes in the “My QRs” section.\n✅ Modern &amp; Minimalist Interface: A clean and mobile-optimized design.\n✅ Personal Data Management: View and update your information in the \"My Data\" section.\n✅ QR Deletion: Easily remove QR codes you no longer need.\n✅ Offline Mode: Access your saved QR codes without an internet connection.\n\n🎯 Perfect for:\n💼 Professionals who want to share their contact details without physical business cards.\n📢 Businesses looking for a fast way to distribute information.\n🎟️ Events and conferences where attendees can easily exchange contact details."
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity", "tools"],
+  "dir": "ltr",
+  "lang": "en-US"
 }
