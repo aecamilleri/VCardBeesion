@@ -1,6 +1,11 @@
+/* Establecer el ancho máximo para simular una pantalla móvil */
 body {
-    background-color: #f7f7f7;
+    max-width: 430px; /* Tamaño típico de un móvil grande */
+    margin: 0 auto;  /* Centrar la app en pantallas grandes */
+    background-color: #f8f9fa; /* Fondo gris claro para destacar el contenido */
     font-family: 'Roboto', sans-serif;
+    border: 1px solid #ddd;
+    min-height: 100vh;
 }
 
 .container {
@@ -49,10 +54,19 @@ h2 {
     text-decoration: underline;
 }
 
+
+
+/* Evitar que los elementos sobrepasen el ancho en pantallas pequeñas */
+.container, .navbar, .fixed-bottom {
+    max-width: 430px;
+    margin: auto;
+}
+
 /* Menú inferior */
 .navbar.fixed-bottom {
     padding: 0;
     border-top: 1px solid #ddd; /* Separador sutil en el menú infer*/
+    width: 100%;
 }
 
 /* Aumentar el tamaño de los íconos */
