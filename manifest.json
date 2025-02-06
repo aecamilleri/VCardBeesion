@@ -2,7 +2,7 @@
   "name": "Beesion VCard Generator",
   "short_name": "BeeCard",
   "description": "This mobile-first application allows users to generate, store, and manage personalized QR codes quickly and easily.",
-  "start_url": "/index.html",
+  "start_url": "/VCardBeesion/index.html",
   "scope": "/",
   "display": "standalone",
   "theme_color": "#000000",
