@@ -12,10 +12,10 @@ self.addEventListener("install", (event) => {
         OFFLINE_PAGE,
         "/",  // Página principal
         "/index.html",
-        "/styles.css",  // Agrega tus archivos CSS y JS reales
+        "/styles.css",  
         "/app.js",
-        "/assets/img/logo.jpg.png"
-      ]);
+        "/assets/img/logo.jpg"
+      ]).catch((error) => console.error("Error al precargar caché:", error));
     })
   );
   self.skipWaiting();
@@ -35,17 +35,17 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Manejo de solicitudes de red
+// Manejo de solicitudes de red con estrategia de caché
 self.addEventListener("fetch", (event) => {
-  if (event.request.mode === "navigate") {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match(OFFLINE_PAGE))
-    );
-  } else {
-    event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        return cachedResponse || fetch(event.request);
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        return response;
       })
-    );
-  }
+      .catch(() => {
+        return caches.match(event.request).then((cachedResponse) => {
+          return cachedResponse || caches.match(OFFLINE_PAGE);
+        });
+      })
+  );
 });
