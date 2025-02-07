@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');  // Importamos bcryptjs
 
 const app = express();
 
@@ -33,7 +34,10 @@ app.post('/api/signup', async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
-        const newUser = new User({ name, email, password });
+        // Encriptamos la contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({ name, email, password: hashedPassword });
         await newUser.save();
         res.status(201).json({ message: 'Usuario creado con éxito' });
     } catch (err) {
@@ -46,9 +50,15 @@ app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ email, password });
+        const user = await User.findOne({ email });
         if (user) {
-            res.status(200).json({ message: 'Usuario autenticado', user });
+            // Comparamos la contraseña ingresada con la almacenada
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (isMatch) {
+                res.status(200).json({ message: 'Usuario autenticado', user });
+            } else {
+                res.status(401).json({ message: 'Credenciales incorrectas' });
+            }
         } else {
             res.status(401).json({ message: 'Credenciales incorrectas' });
         }
