@@ -90,6 +90,12 @@
             const password = document.getElementById('password').value;
             const remember = document.getElementById('remember').checked;
 
+            // Validar que los campos no estén vacíos
+            if (!email || !password) {
+                alert('Por favor, ingresa tu correo electrónico y contraseña.');
+                return;
+            }
+
             // Guardar en localStorage si "Recordar sesión" está activado
             if (remember) {
                 localStorage.setItem('email', email);
@@ -130,6 +136,12 @@
                 return;
             }
 
+            // Validar que todos los campos estén completos
+            if (!name || !phone || !company || !signupEmail || !signupPassword) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
             // Crear un objeto userData con los datos del usuario
             const userData = {
                 name: name,
@@ -146,15 +158,16 @@
             window.location.href = 'dashboard.html';
         });
     </script>
+
     <script>
         if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("sw.js").then(() => {
-            console.log("Service Worker registrado correctamente.");
-          }).catch((error) => {
-            console.error("Error registrando el Service Worker:", error);
-          });
+            navigator.serviceWorker.register("sw.js").then(() => {
+                console.log("Service Worker registrado correctamente.");
+            }).catch((error) => {
+                console.error("Error registrando el Service Worker:", error);
+            });
         }
-      </script>
-      
+    </script>
+
 </body>
 </html>
