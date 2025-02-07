@@ -1,4 +1,3 @@
-// Importa Workbox desde el CDN
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
 const CACHE_NAME = "beesion-vcard-cache";
@@ -12,40 +11,35 @@ self.addEventListener("install", (event) => {
         OFFLINE_PAGE,
         "/",  // Página principal
         "/index.html",
-        "/styles.css",  
-        "/app.js",
-        "/assets/img/logo.jpg"
-      ]).catch((error) => console.error("Error al precargar caché:", error));
+        "/styles.css",  // Asegúrate de que esta ruta sea correcta
+        "/app.js",  // Asegúrate de que esta ruta sea correcta
+        "/assets/img/logo.jpg",  // Logo
+      ]);
     })
   );
-  self.skipWaiting();
 });
 
-// Activa el nuevo Service Worker y elimina cachés antiguos
+// Interceptar las solicitudes y servir desde la caché
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      return cachedResponse || fetch(event.request);
+    })
+  );
+});
+
+// Evento de activación
 self.addEventListener("activate", (event) => {
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames
-          .filter((cache) => cache !== CACHE_NAME)
-          .map((cache) => caches.delete(cache))
+        cacheNames.map((cacheName) => {
+          if (!cacheWhitelist.includes(cacheName)) {
+            return caches.delete(cacheName);
+          }
+        })
       );
     })
-  );
-  self.clients.claim();
-});
-
-// Manejo de solicitudes de red con estrategia de caché
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((cachedResponse) => {
-          return cachedResponse || caches.match(OFFLINE_PAGE);
-        });
-      })
   );
 });

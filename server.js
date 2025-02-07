@@ -12,15 +12,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Conexión a MongoDB
-const mongoose = require('mongoose');
-
 mongoose.connect('mongodb+srv://aecamilleri_db:<PKCj4KFijHLpYfu2>@cluster0.w7pnu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
 .then(() => console.log('✅ Conectado a MongoDB Atlas'))
 .catch(err => console.log('❌ Error de conexión:', err));
-
 
 // Definir un modelo de usuario (schema)
 const UserSchema = new mongoose.Schema({
