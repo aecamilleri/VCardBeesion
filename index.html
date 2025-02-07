@@ -84,44 +84,66 @@
         // Función para manejar el login
         document.getElementById('login-form').addEventListener('submit', function(event) {
             event.preventDefault();
-
+    
             // Obtener datos del formulario
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const remember = document.getElementById('remember').checked;
-
+    
             // Validar que los campos no estén vacíos
             if (!email || !password) {
                 alert('Por favor, ingresa tu correo electrónico y contraseña.');
                 return;
             }
-
-            // Guardar en localStorage si "Recordar sesión" está activado
-            if (remember) {
-                localStorage.setItem('email', email);
-                localStorage.setItem('password', password);
-            }
-
-            // Redirigir al dashboard
-            window.location.href = 'dashboard.html';
+    
+            // Realizar la solicitud POST al backend para autenticar al usuario
+            fetch('http://localhost:3000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Usuario autenticado') {
+                    // Guardar en localStorage si "Recordar sesión" está activado
+                    if (remember) {
+                        localStorage.setItem('email', email);
+                        localStorage.setItem('password', password);
+                    }
+    
+                    // Guardar el usuario autenticado
+                    localStorage.setItem('userData', JSON.stringify(data.user));
+    
+                    // Redirigir al dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Credenciales incorrectas');
+                }
+            })
+            .catch(error => {
+                console.error('Error de autenticación:', error);
+                alert('Hubo un error al intentar iniciar sesión.');
+            });
         });
-
+    
         // Mostrar la sección de Signup
         document.getElementById('show-signup').addEventListener('click', function() {
             document.getElementById('login-div').style.display = 'none';
             document.getElementById('signup-div').style.display = 'block';
         });
-
+    
         // Mostrar la sección de Login
         document.getElementById('show-login').addEventListener('click', function() {
             document.getElementById('signup-div').style.display = 'none';
             document.getElementById('login-div').style.display = 'block';
         });
-
+    
         // Función para manejar el signup
         document.getElementById('signup-form').addEventListener('submit', function(event) {
             event.preventDefault();
-
+    
             // Obtener datos del formulario de registro
             const name = document.getElementById('signup-name').value;
             const phone = document.getElementById('signup-phone').value;
@@ -129,35 +151,54 @@
             const signupEmail = document.getElementById('signup-email').value;
             const signupPassword = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
-
+    
             // Verificar si las contraseñas coinciden
             if (signupPassword !== confirmPassword) {
                 alert('Las contraseñas no coinciden.');
                 return;
             }
-
+    
             // Validar que todos los campos estén completos
             if (!name || !phone || !company || !signupEmail || !signupPassword) {
                 alert('Por favor, completa todos los campos.');
                 return;
             }
-
-            // Crear un objeto userData con los datos del usuario
-            const userData = {
-                name: name,
-                phone: phone,
-                company: company,
-                email: signupEmail,
-                password: signupPassword
-            };
-
-            // Guardar los datos del usuario en el localStorage
-            localStorage.setItem('userData', JSON.stringify(userData));
-
-            // Redirigir al dashboard
-            window.location.href = 'dashboard.html';
+    
+            // Realizar la solicitud POST al backend para registrar al usuario
+            fetch('http://localhost:3000/api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name,
+                    phone,
+                    company,
+                    email: signupEmail,
+                    password: signupPassword
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Usuario creado con éxito') {
+                    // Guardar los datos del usuario en el localStorage
+                    localStorage.setItem('userData', JSON.stringify({
+                        name, phone, company, email: signupEmail
+                    }));
+    
+                    // Redirigir al dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Error al registrar usuario');
+                }
+            })
+            .catch(error => {
+                console.error('Error de registro:', error);
+                alert('Hubo un error al intentar registrar el usuario.');
+            });
         });
     </script>
+    
 
     <script>
         if ("serviceWorker" in navigator) {

@@ -53,7 +53,7 @@ app.post('/api/login', async (req, res) => {
             res.status(401).json({ message: 'Credenciales incorrectas' });
         }
     } catch (err) {
-        res.status(500).json({ message: 'Error en la autenticación', error: err });
+        res.status(500).json({ message: 'Error de servidor', error: err });
     }
 });
 
